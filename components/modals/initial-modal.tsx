@@ -39,8 +39,6 @@ const InitialModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     try {
       const { data, status } = await axios.post("/api/servers", values);
       if (status == 200) {
