@@ -20,7 +20,11 @@ const NavigationSidebar = async () => {
 
   const servers = await db.server.findMany({
     where: {
-      profileId: profile.id,
+      members: {
+        some: {
+          profileId: profile.id,
+        },
+      },
     },
   });
 
@@ -29,7 +33,7 @@ const NavigationSidebar = async () => {
       <NavigationAction />
       <Separator className="h-[2px] bg-zinc-300 dark:bg-zinc-500 rounded-md w-10 mx-auto" />
 
-      <ScrollArea>
+      <ScrollArea className="flex-1 w-full">
         {servers.map((server) => (
           <div key={server.id} className="mb-4">
             <NavigationItem
@@ -41,7 +45,7 @@ const NavigationSidebar = async () => {
         ))}
       </ScrollArea>
 
-      <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
+      <div className="pb-3 mt-auto flex items-center flex-col gap-x-64">
         <ModeToggle />
         <UserButton
           afterSignOutUrl="/"

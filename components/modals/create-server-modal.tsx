@@ -25,7 +25,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 
 const formSchema = z.object({
@@ -34,6 +34,7 @@ const formSchema = z.object({
 
 const CreateServerModal = () => {
   const { isOpen, onClose, type } = useModal();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,10 +47,12 @@ const CreateServerModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const { data, status } = await axios.post("/api/servers", values);
+      
       if (status == 200) {
         form.reset();
         onClose();
-        redirect("/server");
+        router.push(`/servers/${data.id}`);
+        router.refresh();
       }
     } catch (error) {
       console.log(error);

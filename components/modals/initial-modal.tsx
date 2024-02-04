@@ -25,7 +25,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 const formSchema = z.object({
   name: z.string().min(2).max(50),
 });
@@ -37,12 +37,14 @@ const InitialModal = () => {
       name: "",
     },
   });
+  const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const { data, status } = await axios.post("/api/servers", values);
       if (status == 200) {
         form.reset();
+        router.refresh();
         redirect("/server");
       }
     } catch (error) {
@@ -52,7 +54,7 @@ const InitialModal = () => {
 
   return (
     <Dialog>
-      <DialogTrigger>Open</DialogTrigger>
+      {/* <DialogTrigger>Open</DialogTrigger> */}
       <DialogContent className="bg-gray-800">
         <DialogHeader className="flex items-center">
           <DialogTitle>Create Your Server</DialogTitle>
