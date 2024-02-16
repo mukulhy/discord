@@ -54,7 +54,7 @@ const InitialModal = () => {
 
   return (
     <Dialog>
-      {/* <DialogTrigger>Open</DialogTrigger> */}
+      <DialogTrigger>Create your first server</DialogTrigger>
       <DialogContent className="bg-gray-800">
         <DialogHeader className="flex items-center">
           <DialogTitle>Create Your Server</DialogTitle>
