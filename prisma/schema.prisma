@@ -18,7 +18,7 @@ model Profile {
   email    String @db.Text
 
   server   Server[]
-  members   Member[]
+  members  Member[]
   channels Channel[]
 
   createdAt DateTime @default(now())
@@ -36,8 +36,8 @@ model Server {
 
   createdAt DateTime  @default(now())
   updated   DateTime  @updatedAt
-  members    Member[]
-  channels   Channel[]
+  members   Member[]
+  channels  Channel[]
 
   @@index([profileId])
 }
