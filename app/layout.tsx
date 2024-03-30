@@ -5,6 +5,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-providers";
 import { cn } from "@/lib/utils";
 import { ModalProviders } from "@/components/providers/modal-provides";
+import { QueryProvider } from "@/components/providers/query-provider";
+import { SocketProvider } from "@/components/providers/socket-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,21 +23,20 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={cn(
-          inter.className,
-          "bg-white dark:bg-[#313338]"
-          )}>
+        <body className={cn(inter.className, "bg-white dark:bg-[#313338]")}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
             enableSystem={false}
             storageKey="discord-theme"
           >
-            <ModalProviders/>
-            {children}
+            <SocketProvider>
+              <ModalProviders />
+              <QueryProvider>{children}</QueryProvider>
+            </SocketProvider>
           </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
   );
-} 
+}
